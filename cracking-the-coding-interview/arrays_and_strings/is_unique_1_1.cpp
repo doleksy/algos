@@ -1,5 +1,7 @@
 ﻿//  is_unique_1_1.cpp
 //
+//  Implement an algorithm to determine is a string has all unique characters.
+//  What if you cannot use additional data structures.
 
 #include <gtest/gtest.h>
 

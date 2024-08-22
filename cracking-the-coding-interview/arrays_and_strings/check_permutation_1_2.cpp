@@ -1,5 +1,7 @@
 //  check_permutation_1_2.cpp
 //
+//  Given two strings, write a method to decide if one is a permutation
+//  of the other.
 
 #include <gtest/gtest.h>
 
