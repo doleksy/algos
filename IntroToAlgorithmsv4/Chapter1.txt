@@ -1,0 +1,73 @@
+==================================
+Exercise 1.2-2
+
+Suppose that for inputs of size <n> on a particular computer, insertion sort runs in 8n^2 steps
+and merge sort runs in 64n*lg(n) steps. For which values of <n> does insertion sort beat merge sort?
+
+8n^2 < 64n*lg(n)
+ n^2 < 8n *lg(n)
+ n   < 8  *lg(n)
+
+I couldn't figure out how to remove the <n> from the right-hand side so I figured this out
+empiricially by trying values (via binary search).
+
+n = 32: 32 < 40
+n = 64: 64 > 48
+n = 48: 48 > 44.7
+n = 40: 40 < 42.56
+n = 44: 44 > 43.68
+n = 42: 42 < 43.14
+n = 43: 43 < 43.41  <---- for n <= 43, insertion sort beats merge sort
+
+==================================
+Exercise 1.2-3
+
+What is the smallest value of <n> such that an algorithm whose running time is 100n^2
+runs faster than an algorithm whose running time is 2^n on the same machine?
+
+Again, done emprically with a binary search.
+
+solve for:
+100n^2 < 2^n
+
+n = 32: 102400 < 4294967296
+n = 16: 25600  < 65536
+n = 8 : 6400   > 256
+n = 12: 14400  > 4096
+n = 14: 19600  > 16384
+n = 15: 22500  < 32768  <---- for n >= 15, 100n^2 is faster than 2^n
+
+==================================
+Problem 1.1  Comparison of running times
+
+For each function f(n) and time <t> in the following table, determine the largest size <n>
+of a problem that can be solved in time <t>, assuming that the algorithm to solve the problem
+takes f(n) microseconds.
+
+for 1 second:
+n         = 10^6 us
+
+lg(n)     = 10^6 us
+2^(lg(n)) = 2^(10^6)
+n         = 2^(10^6)
+
+n^0.5     = 10^6 us
+(n^0.5)^2 = (10^6)^2
+n         = 10^12
+
+nlg(n)    = 10^6 us
+ lg(n^n)  = 10^6 us
+2^(lg(n^n)) = 2^(10^6)
+
+        |    1   |    1   |    1   |    1   |    1   |    1   |    1
+        | second | minute |  hour  |   day  |  month |  year  | century
+--------+--------+--------+--------+--------+--------+--------+---------
+ lg(n)  |
+ n^0.5  |
+ n      |  10^6  | 6*10^7 | 36*10^8 | 8.64*10^10 | 2.592*10^12 | 3.1536*10^13 | 3.1536*10^15
+ nlg(n) |
+ n^2    |
+ n^3    |
+ 2^n    |
+ n!     |
+
