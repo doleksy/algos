@@ -125,6 +125,54 @@ namespace
         return result;
     }
 
+
+    void quick_sort_interval(std::vector<int> &unsorted, size_t start, size_t end)
+    {
+        // 0 or 1 elements is already sorted
+        if (end - start <= 1) return;
+
+        // use the last element as the pivot
+        int pivotValue = unsorted[end - 1];
+        size_t leftIdx = start;
+        size_t rightIdx = end - 1;
+
+        // partition
+        while (leftIdx < rightIdx)
+        {
+            // find the next element from the left that is >= pivot value
+            while (unsorted[leftIdx] < pivotValue and leftIdx < rightIdx)
+            {
+                ++leftIdx;
+            }
+
+            // find the next element from the right that is < pivot value
+            while (unsorted[rightIdx] >= pivotValue and leftIdx < rightIdx)
+            {
+                --rightIdx;
+            }
+
+            // break when left and right meet
+            if (leftIdx == rightIdx) break;
+
+            // swap element > pivot value with element < value
+            std::swap(unsorted[leftIdx], unsorted[rightIdx]);
+        }
+
+        // swap pivot with next element > than it
+        std::swap(unsorted[leftIdx], unsorted[end - 1]);
+
+        // sort segments before and after pivot
+        quick_sort_interval(unsorted, start, leftIdx);
+        quick_sort_interval(unsorted, leftIdx + 1, end);
+    }
+
+    std::vector<int> quick_sort(std::vector<int> unsorted)
+    {
+        quick_sort_interval(unsorted, 0, unsorted.size());
+        return unsorted;
+    }
+
+
     struct sort_tests
     {
         std::function<std::vector<int>(std::vector<int>)> sort;
@@ -137,9 +185,10 @@ namespace
         { selection_sort, "selection" },
         { bubble_sort, "bubble" },
         { merge_sort, "merge" },
+        { quick_sort, "quick" },
     };
 
-    enum sorter_idx { INSERT = 0, SELECT, BUBBLE, MERGE };
+    enum sorter_idx { INSERT = 0, SELECT, BUBBLE, MERGE, QUICK };
 
 }   // namespace
 
@@ -535,7 +584,7 @@ TEST_P(Sorting, Sort9)
 
 INSTANTIATE_TEST_SUITE_P(SortingAlgos,
     Sorting,
-    testing::Values(INSERT, SELECT, BUBBLE, MERGE),
+    testing::Values(INSERT, SELECT, BUBBLE, MERGE, QUICK),
     [](const testing::TestParamInfo<Sorting::ParamType> &info)
     {
         return sorters[info.param].name;
