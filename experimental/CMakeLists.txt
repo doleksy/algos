@@ -1,7 +1,7 @@
 ﻿# CMakeList.txt : CMake project for linked_lists, include source and define
 # project specific logic here.
 #
-cmake_minimum_required (VERSION 3.30)
+cmake_minimum_required (VERSION 3.30 FATAL_ERROR)
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -11,22 +11,10 @@ endif()
 
 project ("experimental")
 
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG        v1.17.0
-)
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
+include(cmake/CPM.cmake)
 
-FetchContent_Declare(
-  fmt
-  GIT_REPOSITORY https://github.com/fmtlib/fmt
-  GIT_TAG        12.2.0
-)
-FetchContent_MakeAvailable(fmt)
+CPMAddPackage("gh:fmtlib/fmt#12.2.0")
+CPMAddPackage("gh:google/googletest#v1.17.0")
 
 enable_testing()
 
